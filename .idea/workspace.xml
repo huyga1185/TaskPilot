@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd9b29ec-5795-4161-a68e-693db2123fdf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/taskpilot.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/huyvu/Health/HealthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/huyvu/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/checkstyle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/uk/huyvu/Health/HealthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/uk/huyvu/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +50,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.Main.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feat/ci-pipeline",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/huy/Repositories/TaskPilot/backend",
     "node.js.detected.package.eslint": "true",
@@ -67,6 +61,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -94,7 +89,7 @@
       <updated>1778856259426</updated>
       <workItem from="1778856260675" duration="62000" />
       <workItem from="1778856562703" duration="1586000" />
-      <workItem from="1778858334088" duration="1790000" />
+      <workItem from="1778858334088" duration="12022000" />
     </task>
     <servers />
   </component>
