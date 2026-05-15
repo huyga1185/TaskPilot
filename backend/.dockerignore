@@ -9,6 +9,9 @@ target/
 *.log
 logs/
 .DS_Store
-.mvn/
-mvnw
-mvnw.cmd
+.vscode/
+.vim/
+.nvim/
+*.swp
+*.swo
+*~

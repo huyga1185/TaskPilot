@@ -5,10 +5,7 @@ target/
 .kotlin
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -34,6 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Vim / Neovim ###
+.vim/
+.nvim/
+*.swp
+*.swo
+*~
 
 ### Mac OS ###
 .DS_Store
