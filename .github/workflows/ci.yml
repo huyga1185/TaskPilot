@@ -1,0 +1,77 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+    # Ignore doc-only changes to avoid spending CI minutes on non-code edits.
+    paths-ignore:
+      - ".github/workflows/cd.yml"
+      - "docs/**"
+      - "backend/README.md"
+      - "README.md"
+      - "frontend/README.md"
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths-ignore:
+      - ".github/workflows/cd.yml"
+      - "docs/**"
+      - "backend/README.md"
+      - "README.md"
+      - "frontend/README.md"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_BACKEND: ${{ github.repository_owner }}/taskpilot-be
+
+jobs:
+  backend-ci:
+    name: Backend CI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          # Cache ~/.m2 based on the backend pom to avoid re-downloading dependencies.
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+
+      - name: Set up Maven 3.9.15
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.15
+
+      # Verifies formatting without mutating the workspace.
+      - name: Run Spotless
+        run: mvn -B -Pdev spotless:check
+
+      # Enforces project style rules defined in checkstyle.xml.
+      - name: Run Checkstyle
+        run: mvn -B -Pdev checkstyle:check
+
+      # Flags code smells and rule violations from the custom PMD ruleset.
+      - name: Run PMD
+        run: mvn -B -Pdev pmd:check
+
+      # Detects copy-pasted code blocks that exceed the configured threshold.
+      - name: Run CPD
+        run: mvn -B -Pdev pmd:cpd-check
+
+      # Analyzes compiled bytecode to catch bug patterns that style tools miss.
+      - name: Run SpotBugs
+        run: mvn -B -Pdev spotbugs:check
+
+      # Verifies the backend compiles and packages successfully for production.
+      - name: Build Backend
+        run: mvn -B -Pprod -DskipTests clean package
