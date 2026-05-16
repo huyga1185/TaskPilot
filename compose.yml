@@ -32,7 +32,7 @@ services:
       SERVER_PORT: ${SERVER_PORT:-8080}
       SERVER_CONTEXT_PATH: ${SERVER_CONTEXT_PATH:-/api}
     volumes:
-      - ./backend:/app/backend
+      - ./backend:/app
     depends_on:
       db:
         condition: service_healthy
@@ -47,6 +47,7 @@ services:
     environment:
       PORT: ${PORT:-3000}
     volumes:
-      - ./frontend/src:/app/frontend
+      - ./frontend:/app
+      - /app/node_modules
 volumes:
   mariadb_data:
