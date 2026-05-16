@@ -17,18 +17,23 @@ const mergeConflictMarkerPattern = /^(<<<<<<<|=======|>>>>>>>)/m;
 let hasError = false;
 
 for (const file of filesToCheck) {
-  const content = await readFile(resolve(root, file.path), "utf8");
+  try {
+    const content = await readFile(resolve(root, file.path), "utf8");
 
-  if (mergeConflictMarkerPattern.test(content)) {
-    console.error(`Merge conflict markers found in ${file.path}`);
-    hasError = true;
-  }
-
-  for (const snippet of file.requiredSnippets) {
-    if (!content.includes(snippet)) {
-      console.error(`Missing "${snippet}" in ${file.path}`);
+    if (mergeConflictMarkerPattern.test(content)) {
+      console.error(`Merge conflict markers found in ${file.path}`);
       hasError = true;
     }
+
+    for (const snippet of file.requiredSnippets) {
+      if (!content.includes(snippet)) {
+        console.error(`Missing "${snippet}" in ${file.path}`);
+        hasError = true;
+      }
+    }
+  } catch (err) {
+    console.log(`Error reading ${file.path}: ${err.message}`);
+    hasError = true;
   }
 }
 
