@@ -75,3 +75,89 @@ jobs:
       # Verifies the backend compiles and packages successfully for production.
       - name: Build Backend
         run: mvn -B -Pprod -DskipTests clean package
+
+  frontend-ci:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run unit test
+        run: npm test -- --run
+
+      - name: Build production bundle
+        run: npm run build
+
+  integration-test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    needs: [backend-ci]
+    defaults:
+      run:
+        working-directory: ./backend
+    env:
+      SERVER_PORT: 8080
+      SERVER_CONTEXT_PATH: /api
+
+    services:
+      mariadb:
+        image: mariadb:11.8
+        env:
+          MARIADB_ROOT_PASSWORD: myrootpassword
+          MARIADB_DATABASE: taskpilot_db
+          MARIADB_USER: taskpilot_usr
+          MARIADB_PASSWORD: myuserpassword
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "/usr/local/bin/healthcheck.sh --connect --innodb_initialized"
+          --health-interval 10s
+          --health-timeout 5s
+          --retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+
+      - name: Set up Maven 3.9.15
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.15
+
+      - name: Build Backend
+        run: mvn -B -Pprod -DskipTests clean package
+
+      - name: Run Backend
+        run: java -jar target/*.jar > /tmp/taskpilot-backend.log 2>&1 &
+
+      - name: Wait for health endpoint
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent "http://127.0.0.1:${SERVER_PORT}${SERVER_CONTEXT_PATH}/health" >/tmp/taskpilot-health.json; then
+              cat /tmp/taskpilot-health.json
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/taskpilot-backend.log
+          exit 1
