@@ -125,7 +125,7 @@ jobs:
           --health-cmd "/usr/local/bin/healthcheck.sh --connect --innodb_initialized"
           --health-interval 10s
           --health-timeout 5s
-          --retries 5
+          --health-retries 5
 
     steps:
       - name: Checkout code
