@@ -42,6 +42,8 @@ services:
       context: ./frontend
       target: development
     restart: unless-stopped
+    depends_on:
+      - backend
     ports:
       - "${PORT:-3000}:${PORT:-3000}"
     environment:
