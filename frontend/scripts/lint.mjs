@@ -32,7 +32,7 @@ for (const file of filesToCheck) {
       }
     }
   } catch (err) {
-    console.log(`Error reading ${file.path}: ${err.message}`);
+    console.error(`Error reading ${file.path}: ${err.message}`);
     hasError = true;
   }
 }
