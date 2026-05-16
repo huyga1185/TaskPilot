@@ -5,6 +5,7 @@ COPY package-lock.json package.json ./
 FROM base AS development
 RUN npm ci
 COPY . .
+ENV NODE_ENV=development
 ENV PORT=3000
 EXPOSE ${PORT}
 CMD ["npm", "run", "dev", "--", "--host"]
