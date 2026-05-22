@@ -27,10 +27,14 @@ services:
       - "${BACKEND_DEV_PORT:-8080}:${SERVER_PORT:-8080}"
       - "5005:5005"
     environment:
+      DEBUG: "true"
       MAVEN_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
       SPRING_PROFILES_ACTIVE: dev
       SERVER_PORT: ${SERVER_PORT:-8080}
       SERVER_CONTEXT_PATH: ${SERVER_CONTEXT_PATH:-/api}
+      DB_USER: ${DB_USER}
+      DB_USER_PASSWORD: ${DB_USER_PASSWORD}
+      DB_URL: ${DB_URL}
     volumes:
       - ./backend:/app
     depends_on:

@@ -2,3 +2,12 @@ server:
   servlet:
     context-path: ${SERVER_CONTEXT_PATH:/api}
   port: ${SERVER_PORT:8080}
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_USER_PASSWORD}
+    url: ${DB_URL}
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
